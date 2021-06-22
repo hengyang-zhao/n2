@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -euo pipefail
+
+while getopts "r:w:b:" opt; do
+    case "$opt" in
+        r)
+            ;;
+        w)
+            ;;
+        b)
+            ;;
+        *)
+            ;;
+    esac
+done
+

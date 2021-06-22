@@ -1,6 +1,9 @@
 # n2
 
-Project [nidus](https://github.com/hengyang-zhao/nidus.git) has many design flaws proved by everyday terminal/shell interactions. It's time to design the next generation config management framework. The new framework should have the following improvements:
+Project [nidus](https://github.com/hengyang-zhao/nidus.git) has many design
+flaws proved by everyday terminal/shell interactions. It's time to design the
+next generation config management framework --- n2. The new framework should
+have the following improvements:
 
 1. Have a more straightforward installation process.
 

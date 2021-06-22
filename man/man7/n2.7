@@ -1,0 +1,290 @@
+.TH N2 7 "June 2021" "Project N2" "User Command"
+
+.SH NAME
+.B n2
+\- nonintrusive initialization decoupling for unix systems
+
+.SH SYNOPSIS
+.B n2
+.B subcommand
+
+.SH DESCRIPTION
+Command
+.B n2
+facilitates management and information querying for project n2.  Project
+n2 provides version controlled initialization files for common unix tools,
+such as bash, vim, tmux, git, etc.
+
+.SH SUBCOMMAND
+.TP
+.B banner [ on | off ]
+turn on/off the startup banner
+
+.TP
+.B clean
+clean up backup directory
+
+.TP
+.B info
+show this man page
+
+.TP
+.B reinstall [ --overwrite-all ] [ --no-backup ] [ --force-legacy ]
+forward to the install.sh script and reinstall project n2; in most cases
+this is not required unless the version controlled n2 project directory is
+moved, or on major upgrade
+
+.TP
+.B update
+update project n2 by issuing git pull on the current branch; a reinstall
+is not necessary unless on major update reception
+
+.SH DIRECTORY
+.TP
+\fB~/.n2_site_config/bash/profile/\fP or \fB~/.n/bash/profile/\fP
+stores site specific bash profiles; various path extensions are recommended
+to put here; this directory is not under version control; files are sourced
+in ascii order and recommended to be named like
+.I 00-example.sh
+
+.TP
+\fB~/.n2_site_config/bash/rc/\fP or \fB~/.n/bash/rc/\fP
+stores site specific bash rc files; interactive enhancement configurations
+are recommended to put here; this directory is not under version control;
+files are sourced in ascii order and recommended to be named like
+.I 00-example.sh
+
+.TP
+\fB~/.n2_site_config/git/\fP or \fB~/.n/git/\fP
+stores stie specific git config files; currently only
+.I custom
+and
+.I user
+are automatically in effect
+
+.TP
+\fB~/.n2_site_config/tmux/\fP or \fB~/.n/tmux/\fP
+stores stie specific git config files; currently only
+.I custom.conf
+is automatically in effect
+
+.TP
+\fB~/.n2_site_config/vim/\fP or \fB~/.n/vim/\fP
+stores site specific vim rc files; this directory is not under version
+control; files are sourced in ascii order and recommended to be named like
+.I 00-example.vim
+
+.TP
+\fB~/.n2_site_config/exec/\fP or \fB~/.n/exec/\fP
+stores site specific executables; this directory is automatically included
+in the PATH variable
+
+.SH MODIFIED COMMAND
+.TP
+.B cd
+a modified version from Petar Marinov's acd_func
+
+.TP
+.B cd --
+print
+.B cd
+history up to 10 items
+
+.TP
+.B cd -#
+.B cd
+into history item '#'
+
+.TP
+.B git
+aliased to \fBhub\fR, if available
+
+.SH ONE LETTER ALIASES
+
+.TP
+.B \-
+cd ..
+
+.TP
+.B t
+attach to session 'main' in \fBtmux\fR; create if not exist
+
+.SH TOY COMMAND
+
+.TP
+.B bashtrap [label]
+while true, do bash; no need to panic \-\-\- you have your way out
+
+.TP
+.B lab [label]
+same as bashtrap
+
+.TP
+.B regex\-test
+an interactive environment for testing bash regular expression
+
+.TP
+.B perm\-stack
+print the permission stack of current directory and all parent directories
+
+.SH FEATURE VARIABLE
+
+.TP
+.B N2_ENABLE_STATUS_LINE
+enable status line after each command
+
+.TP
+.B N2_THICK_SEPARATOR
+use thick separator (useful when a terminal does not support underline [tput smul])
+
+.TP
+.B N2_THICK_SEPARATOR_CHAR
+override filler char in the thick separator
+
+.TP
+.B N2_ENABLE_CMD_EXPANSION
+enable command expansion
+
+.TP
+.B N2_ENABLE_STATUS_LINE
+enable process status line
+
+.TP
+.B N2_ENABLE_EXPLICIT_EOF
+(experimental) explicitly mark eof if last command did not end with a new-line character
+
+.TP
+.B N2_CMD_EXPANSION_SINK
+override the target fd when printing command expansion; default is the
+standard error fd: &2; allowed formats are: "/path/to/a/writtable/file" or &N
+where N is an open file descriptor
+
+.TP
+.B N2_CMD_EXPANSION_SINK_PROXY_FD
+override the temporary allocated file descriptor used to relay the command
+expansion string; default value is 99
+
+.TP
+.B N2_AUTO_ATTACH_TMUX
+exec tmux automatically upon a remote login;
+valid options: yes, no (default)
+
+.TP
+.B N2_PS1_HOSTNAME
+force using this as hostname info in the bash PS1 prompt
+
+.TP
+.B N2_REPORT_UNBOUND_VARIABLE
+report unbound (undefined) variable substitution;
+valid options: yes (default), no
+
+.SH STYLE VARIABLE
+
+.TP
+.B N2_FMT_PS1_HOSTNAME N2_FMT_PS1_HOSTNAME_ROOT
+override hostname style in bash PS1 prompt
+
+.TP
+.B N2_FMT_PS1_USERNAME N2_FMT_PS1_USERNAME_ROOT
+override username style in bash PS1 prompt
+
+.TP
+.B N2_FMT_PS1_USERHOST_PUNCT N2_FMT_PS1_USERHOST_PUNCT_ROOT
+override user and host punct style in bash PS1 prompt
+
+.TP
+.B N2_FMT_PS1_IFS N2_FMT_PS1_IFS_VALUE
+override non-default IFS label and value in bash PS1 prompt
+
+.TP
+.B N2_FMT_PS1_CHROOT N2_FMT_PS1_CHROOT_ROOT
+override style for chroot indicator in bash PS1 prompt
+
+.TP
+.B N2_FMT_PS1_BG_INDICATOR
+override style of number of background processes indicator in bash PS1 prompt
+
+.TP
+.B N2_FMT_PS1_SHLVL_INDICATOR
+override style of shell level indicator in bash PS1 prompt
+
+.TP
+.B N2_FMT_PS1_SCREEN_INDICATOR
+override style of GNU screen session indicator in bash PS1 prompt
+
+.TP
+.B N2_FMT_PS1_GIT_INDICATOR
+override style of git indicator in bash PS1 prompt
+
+.TP
+.B N2_FMT_PS1_CWD
+override style of cwd in bash PS1 prompt
+
+.TP
+.B N2_FMT_PS1_PERM_GOOD N2_FMT_PS1_PERM_BAD
+override style of permission indicator
+
+.TP
+.B N2_FMT_PS1_PHYSICAL_CWD
+override style of automatic physical cwd indicator in bash PS1 prompt
+
+.TP
+.B N2_FMT_PS1_DOLLAR_HASH
+override style of the dollar/hash sign in bash PS1 prompt
+
+.TP
+.B N2_FMT_PS1_LABEL
+override style of the label field in bash PS1 prompt
+
+.TP
+.B N2_FMT_STATUS_OK
+override style of the process status-ok indicator
+
+.TP
+.B N2_FMT_STATUS_ERROR
+override style of the process status-error indicator
+
+.TP
+.B N2_FMT_STATUS_HRULE
+override style of the process status line
+
+.TP
+.B N2_FMT_CMD_EXPANSIONS
+override style of the command expansion lines
+
+.TP
+.B N2_FMT_PINNED_KEY N2_FMT_PINNED_VALUE N2_FMT_PINNED_PUNCT
+override style of the pinned variables
+
+.SH HOOK
+.TP
+.B n2_hook_ps1_cwd
+reformat cwd field in bash PS1; cwd will be taken as the only argument;
+reformatted cwd should be inline-echoed; this hook is often useful when one
+wants to highlight a specific field in cwd; string substitutions of
+.B $(__n2_fmt ps1_cwd)
+and
+.B $(__n2_inline_echo)
+may be helpful; piping to GNU sed(1) taking advantage of regular expression is
+often desired
+
+.TP
+.B n2_hook_postcd
+do extra work after
+.B cd
+command; arguments are ignored
+
+.TP
+.B n2_hook_label_<LABEL>
+extra initialization for labelled session <LABEL>; besides cutomized code,
+function
+.B n2_define_pinned <VAR_NAME> <VAR_VALUE>
+can be used to define bash variables to be printed with the PS1
+
+.SH
+SEE ALSO
+bash(1), tmux(1), git(1), vim(1)
+
+.SH
+AUTHOR
+Hengyang Zhao <hzhao877502@gmail.com>
