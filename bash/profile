@@ -12,7 +12,7 @@ __n2_get_root() {
 }
 
 __n2_get_my_root() {
-    echo "${N2_MY_DIR:-$HOME/.myn2}"
+    echo "${N2_MY_DIR:-$HOME/.m2}"
 }
 
 __N2_DIR=$(__n2_get_root)
