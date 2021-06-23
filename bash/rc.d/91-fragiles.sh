@@ -6,7 +6,7 @@ __n2_infinite_bash()
         clear
         echo
         echo "+============================================================+"
-        echo "|                      Nidus Bash Trap                       |"
+        echo "|                          Bash Trap                         |"
         echo "+------------------------------------------------------------+"
         echo "| ** This bash session will be RESTARTED on normal exit.     |"
         echo "| ** To escape, use exit code 200.                           |"

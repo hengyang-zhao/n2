@@ -1,0 +1,26 @@
+__n2_load_profiles() {
+    local profile
+    for profile in "$__N2_DIR"/bash/profile.d/*.sh; do
+        source "$profile"
+    done
+}
+
+__n2_get_root() {
+    local source_path
+    source_path=$(realpath "$BASH_SOURCE")
+    echo $(realpath -m "$source_path"/../..)
+}
+
+__n2_get_my_root() {
+    echo "${N2_MY_DIR:-$HOME/.myn2}"
+}
+
+__N2_DIR=$(__n2_get_root)
+__N2_MY_DIR=$(__n2_get_my_root)
+
+export __N2_DIR __N2_MY_DIR
+
+__n2_load_profiles
+
+source "$__N2_DIR"/bash/rc
+

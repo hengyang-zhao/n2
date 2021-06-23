@@ -6,7 +6,7 @@ fi
 
 __n2_load_rc() {
     local rc
-    for rc in "$__N2_DIR"/rc.d/*.sh; do
+    for rc in "$__N2_DIR"/bash/rc.d/*.sh; do
         source "$rc"
     done
 }
