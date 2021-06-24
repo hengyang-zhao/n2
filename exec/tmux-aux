@@ -1,0 +1,55 @@
+#!/bin/sh
+
+KEY="$1"
+OS="$(uname -s)"
+UNKNOWN_STR="(unknown)"
+
+case "$KEY" in
+    load)
+        case "$OS" in
+            Linux | Cygwin)
+                uptime | sed 's/^.*load average:\s*\([0-9\.]\+\),.*$/\1/g'
+                ;;
+            Darwin | FreeBSD)
+                sysctl -n vm.loadavg | cut -d' ' -f 2
+                ;;
+            *)
+                echo "$UNKNOWN_STR"
+        esac
+        ;;
+
+    ncpu)
+        case "$OS" in
+            Linux | Cygwin)
+                expr "$(grep -E '^processor' /proc/cpuinfo | tail -1 | cut -d: -f2 | xargs)" + 1
+                ;;
+            Darwin | FreeBSD)
+                sysctl -n hw.ncpu
+                ;;
+            *)
+                echo "$UNKNOWN_STR"
+                ;;
+        esac
+        ;;
+
+    hostabbrev)
+        HOSTNAME=${N2_PS1_HOSTNAME:-$(hostname -s)}
+        if [ "${#HOSTNAME}" -gt 12 ]; then
+            case "$OS" in
+                Linux | Cygwin)
+                    echo "$HOSTNAME" | sed 's/^\(.\{6\}\).*\(.\{3\}\)$/\1`\2/g'
+                    ;;
+                Darwin | FreeBSD)
+                    echo "$HOSTNAME" | sed -E 's/^(.{6}).*(.{3})$/\1`\2/g'
+                    ;;
+                *)
+                    echo "$HOSTNAME"
+            esac
+        else
+            echo "$HOSTNAME"
+        fi
+        ;;
+
+    *)
+        echo "$UNKNOWN_STR"
+esac
