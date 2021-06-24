@@ -36,10 +36,10 @@ source-file $N2_DIR/tmux/conf
 EOM
 
 declare -A PLAN=(
-    ["$BASHRC_PATH"]="$BASHRC_SNIP"
-    ["$BASH_PROFILE_PATH"]="$BASH_PROFILE_SNIP"
-    ["$VIMRC_PATH"]="$VIMRC_SNIP"
-    ["$TMUX_CONF_PATH"]="$TMUX_CONF_SNIP"
+["$BASHRC_PATH"]="$BASHRC_SNIP"
+["$BASH_PROFILE_PATH"]="$BASH_PROFILE_SNIP"
+["$VIMRC_PATH"]="$VIMRC_SNIP"
+["$TMUX_CONF_PATH"]="$TMUX_CONF_SNIP"
 )
 
 function indent {
@@ -60,10 +60,10 @@ function fmt {
 
 print_diff() {
     local path snippet
-path="$1"
-snippet="$2"
-echo "Will apply diff to file $(fmt 1 <<< $path):"
-(diff -C10 "$path" <(cat "$path" <(echo "$snippet")) || true) | fmt 34
+    path="$1"
+    snippet="$2"
+    echo "Will apply diff to file $(fmt 1 <<< $path):"
+    (diff -C10 "$path" <(cat "$path" <(echo "$snippet")) || true) | fmt 34
 }
 
 confirm() {
@@ -73,21 +73,23 @@ confirm() {
 
 install() {
     local path snippet
-path="$1"
-snippet="$2"
-	#echo "${snippet}" >> "$path"
-echo "Wrote to file $(fmt 1 <<< "$path")."
+    path="$1"
+    snippet="$2"
+    echo "${snippet}" >> "$path"
+    echo "Wrote to file $(fmt 1 <<< "$path")."
 }
 
 main() {
-	local path snippet
-for path in ${!PLAN[@]}; do
-snippet="${PLAN["$path"]}"
-	print_diff "$path" "$snippet"
-	confirm || continue
-	install "$path" "$snippet"
-done
-
+    local path snippet
+    for path in ${!PLAN[@]}; do
+        snippet="${PLAN["$path"]}"
+        print_diff "$path" "$snippet"
+        confirm || continue
+        install "$path" "$snippet"
+    done
+    echo
+    echo "N2 installation complete. Please logout then login."
+    echo
 }
 
 main
