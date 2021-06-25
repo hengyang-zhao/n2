@@ -9,11 +9,15 @@ if [ ${BASH_VERSINFO[0]} -lt 4 ]; then
 fi
 
 N2_DIR=$(cd "$(dirname "$0")"; pwd)
+INSTALLED_FILES="$N2_DIR/volatile/INSTALLED_FILES"
 
 BASHRC_PATH="$HOME/.bashrc"
 BASH_PROFILE_PATH="$HOME/.bash_profile"
 VIMRC_PATH="$HOME/.vimrc"
 TMUX_CONF_PATH="$HOME/.tmux.conf"
+GIT_CONFIG_PATH="$HOME/.gitconfig"
+
+AUTO_CONFIRM=no
 
 read -r -d '' BASHRC_SNIP << EOM || true
 # n2 installation
@@ -35,11 +39,18 @@ read -r -d '' TMUX_CONF_SNIP << EOM || true
 source-file $N2_DIR/tmux/conf
 EOM
 
-declare -A PLAN=(
-["$BASHRC_PATH"]="$BASHRC_SNIP"
-["$BASH_PROFILE_PATH"]="$BASH_PROFILE_SNIP"
-["$VIMRC_PATH"]="$VIMRC_SNIP"
-["$TMUX_CONF_PATH"]="$TMUX_CONF_SNIP"
+read -r -d '' GIT_CONFIG_SNIP << EOM || true
+# n2 installation
+[include]
+    path = $N2_DIR/git/config
+EOM
+
+declare -A SNIPPETS=(
+    ["$BASHRC_PATH"]="$BASHRC_SNIP"
+    ["$BASH_PROFILE_PATH"]="$BASH_PROFILE_SNIP"
+    ["$VIMRC_PATH"]="$VIMRC_SNIP"
+    ["$TMUX_CONF_PATH"]="$TMUX_CONF_SNIP"
+    ["$GIT_CONFIG_PATH"]="$GIT_CONFIG_SNIP"
 )
 
 function indent {
@@ -62,13 +73,69 @@ print_diff() {
     local path snippet
     path="$1"
     snippet="$2"
+
+    echo
     echo "Will apply diff to file $(fmt 1 <<< $path):"
-    (diff -C10 "$path" <(cat "$path" <(echo "$snippet")) || true) | fmt 34
+
+    (diff -C5 "$path" <(cat "$path" <(echo "$snippet")) || true) | fmt 34 | indent '  '
+}
+
+is_installed() {
+    local path line
+    path="$1"
+    [ -e $INSTALLED_FILES ] || return 1
+    while read -r line; do
+        [ "$line" = "$path" ] && return 0
+    done < "$INSTALLED_FILES"
+    return 1
+}
+
+mark_installed() {
+    local path
+    path="$1"
+    echo "$path" >> "$INSTALLED_FILES"
 }
 
 confirm() {
-    echo -e "Looks good? Hit ENTER to continue, or ^C to cancel."
-    read
+    local default_reply path
+    path="$1"
+
+    if [ "$AUTO_CONFIRM" = yes ]; then
+        return 0
+    fi
+
+    if is_installed "$path"; then
+        default_reply=N
+    else
+        default_reply=Y
+    fi
+
+    echo "Looks good?"
+    while :; do
+        echo "  $(fmt 1 <<< Y) to continue;"
+        echo "  $(fmt 1 <<< A) to continue and auto-confirm all the following installations;"
+        echo "  $(fmt 1 <<< N) to skip installing this one;"
+        echo "  $(fmt 1 <<< Q) to abort installation:"
+        read -re -p "> " -i "$default_reply"
+        case "$REPLY" in
+            Y | y )
+                return 0
+                ;;
+            A | a)
+                AUTO_CONFIRM=yes
+                return 0
+                ;;
+            N | n)
+                return 1
+                ;;
+            Q | q)
+                exit
+                ;;
+            *)
+                echo "Invalid option."
+                continue
+        esac
+    done
 }
 
 install() {
@@ -76,20 +143,43 @@ install() {
     path="$1"
     snippet="$2"
     echo "${snippet}" >> "$path"
-    echo "Wrote to file $(fmt 1 <<< "$path")."
+    echo "Wrote to file $(fmt 1 <<< "$path")." | fmt 33
+    mark_installed "$path"
+}
+
+banner() {
+    local key
+    key="$1"
+    case "$key" in
+        welcome)
+            echo
+            echo "-------------------------------------------------------"
+            echo "-- Welcome to N2 --- the next geration of N.I.D.U.S. --"
+            echo "-------------------------------------------------------"
+            echo
+            ;;
+        jobdone)
+            echo
+            echo "---------------------------------------------------------"
+            echo "-- N2 installation complete. Please logout then login. --"
+            echo "---------------------------------------------------------"
+            echo
+            ;;
+        *)
+            return 1
+    esac
 }
 
 main() {
     local path snippet
-    for path in ${!PLAN[@]}; do
-        snippet="${PLAN["$path"]}"
+    banner welcome
+    for path in ${!SNIPPETS[@]}; do
+        snippet="${SNIPPETS["$path"]}"
         print_diff "$path" "$snippet"
-        confirm || continue
+        confirm "$path" || continue
         install "$path" "$snippet"
     done
-    echo
-    echo "N2 installation complete. Please logout then login."
-    echo
+    banner jobdone
 }
 
 main

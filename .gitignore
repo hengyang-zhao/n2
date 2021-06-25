@@ -1,2 +1,3 @@
 .DS_Store
-volatile
+volatile/*
+!volatile/NOTE
