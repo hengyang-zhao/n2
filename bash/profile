@@ -1,10 +1,3 @@
-__n2_load_profiles() {
-    local profile
-    for profile in "$__N2_DIR"/bash/profile.d/*.sh; do
-        source "$profile"
-    done
-}
-
 __n2_get_root() {
     local source_path cwd
     cwd=$(cd "$(dirname "$BASH_SOURCE")"; pwd)
@@ -18,9 +11,20 @@ __n2_get_my_root() {
 __N2_DIR=$(__n2_get_root)
 __N2_MY_DIR=$(__n2_get_my_root)
 
+source "$__N2_DIR/bash/common/debug.sh"
+
+__n2_load_profiles() {
+    local profile
+    for profile in "$__N2_DIR"/bash/profile.d/*.sh; do
+        __n2_source "$profile"
+    done
+}
+
 export __N2_DIR __N2_MY_DIR
 
 __n2_load_profiles
 
-source "$__N2_DIR"/bash/rc
+if [ -n "$PS1" ]; then
+    __n2_source "$__N2_DIR"/bash/rc
+fi
 

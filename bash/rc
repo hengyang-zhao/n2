@@ -1,13 +1,13 @@
-[ -z "$PS1" ] && return
+source "$__N2_DIR/bash/common/debug.sh"
 
 if [ -f /etc/bashrc ]; then
-    source /etc/bashrc
+    __n2_source /etc/bashrc
 fi
 
 __n2_load_rc() {
     local rc
     for rc in "$__N2_DIR"/bash/rc.d/*.sh; do
-        source "$rc"
+        __n2_source "$rc"
     done
 }
 
