@@ -77,6 +77,7 @@ print_diff() {
     echo
     echo "Will apply diff to file $(fmt 1 <<< $path):"
 
+    [ -e "$path" ] || path=/dev/null
     (diff -C5 "$path" <(cat "$path" <(echo "$snippet")) || true) | fmt 34 | indent '  '
 }
 
