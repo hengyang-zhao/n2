@@ -6,9 +6,9 @@ __n2_load_profiles() {
 }
 
 __n2_get_root() {
-    local source_path
-    source_path=$(realpath "$BASH_SOURCE")
-    echo $(realpath -m "$source_path"/../..)
+    local source_path cwd
+    cwd=$(cd "$(dirname "$BASH_SOURCE")"; pwd)
+    echo "$(dirname "$cwd")"
 }
 
 __n2_get_my_root() {
