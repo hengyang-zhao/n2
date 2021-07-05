@@ -4,12 +4,12 @@ __n2_get_root() {
     echo "$(dirname "$cwd")"
 }
 
-__n2_get_my_root() {
-    echo "${N2_MY_DIR:-$HOME/.m2}"
+__n2_get_m2_root() {
+    echo $HOME/.m2*
 }
 
 __N2_DIR=$(__n2_get_root)
-__N2_MY_DIR=$(__n2_get_my_root)
+__M2_DIRS=$(__n2_get_m2_root)
 
 source "$__N2_DIR/bash/common/debug.sh"
 
@@ -20,7 +20,7 @@ __n2_load_profiles() {
     done
 }
 
-export __N2_DIR __N2_MY_DIR
+export __N2_DIR __M2_DIRS
 
 __n2_load_profiles
 
