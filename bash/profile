@@ -9,7 +9,7 @@ __n2_get_m2_root() {
 }
 
 __N2_DIR=$(__n2_get_root)
-__M2_DIRS=$(__n2_get_m2_root)
+__M2_DIRS=($(__n2_get_m2_root))
 
 source "$__N2_DIR/bash/common/debug.sh"
 
