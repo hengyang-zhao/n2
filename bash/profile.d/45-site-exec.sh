@@ -1,6 +1,6 @@
 function __n2_export_site_exec_path {
-    local path
-    for path in "${__M2_DIRS[@]}"; do
+    local path IFS
+    IFS=:; for path in $__M2_DIRS; do
         PATH="$path/exec:$PATH"
     done
     export PATH

@@ -5,11 +5,19 @@ __n2_get_root() {
 }
 
 __n2_get_m2_root() {
-    echo $HOME/.m2*
+    local ret
+    for p in $HOME/.m2*; do
+        if [ -z "$ret" ]; then
+            ret="$p"
+        else
+            ret="$ret:$p"
+        fi
+    done
+    echo "$ret"
 }
 
 __N2_DIR=$(__n2_get_root)
-__M2_DIRS=($(__n2_get_m2_root))
+__M2_DIRS=$(__n2_get_m2_root)
 
 source "$__N2_DIR/bash/common/debug.sh"
 
