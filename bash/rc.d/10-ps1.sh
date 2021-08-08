@@ -50,6 +50,17 @@ function __n2_short_hostname {
     fi
 }
 
+function __n2_ps1_nice {
+    __n2_has nice || return 1
+    local n
+    n=$(nice)
+    [ "$n" = 0 ] && return 1
+    __n2_fmt "ps1_priority_$(((n+20)/4))" zero_width
+    __n2_inline_echo "n($n)"
+    __n2_reset_fmt zero_width
+    return 0
+}
+
 function __n2_ps1_user_host {
     __n2_ps1_username
 
@@ -253,6 +264,7 @@ PS1='$(
         __n2_ps1_bg_indicator "\j" && __n2_ps1_space
         __n2_ps1_shlvl_indicator   && __n2_ps1_space
         __n2_ps1_screen_indicator  && __n2_ps1_space
+        __n2_ps1_nice              && __n2_ps1_space
         __n2_ps1_git_indicator     && __n2_ps1_space
         __n2_ps1_permission        && __n2_ps1_space
         __n2_ps1_cwd "\w"

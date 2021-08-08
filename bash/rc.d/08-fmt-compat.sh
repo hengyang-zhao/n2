@@ -33,6 +33,13 @@ N2_FMT_PS1_GIT_INDICATOR="$(tput setaf $(__n2_rgb 5 1 0))"
 N2_FMT_PS1_PERM_GOOD="$(tput setaf $(__n2_rgb 1 4 2))"
 N2_FMT_PS1_PERM_BAD="$(tput setaf $(__n2_rgb 5 1 2))"
 N2_FMT_PS1_CWD="$(tput setaf $(__n2_rgb 0 3 4))"
+N2_FMT_PS1_PRIORITY=(
+    "$(tput setaf $(__n2_rgb 5 0 1))" "$(tput setaf $(__n2_rgb 5 1 1))"
+    "$(tput setaf $(__n2_rgb 4 1 1))" "$(tput setaf $(__n2_rgb 4 2 1))"
+    "$(tput setaf $(__n2_rgb 3 2 1))" "$(tput setaf $(__n2_rgb 3 3 1))"
+    "$(tput setaf $(__n2_rgb 2 3 1))" "$(tput setaf $(__n2_rgb 2 4 1))"
+    "$(tput setaf $(__n2_rgb 1 4 1))" "$(tput setaf $(__n2_rgb 1 5 1))"
+)
 N2_FMT_PS1_PHYSICAL_CWD="$(tput setaf $(__n2_gray 12))"
 N2_FMT_PS1_DOLLAR_HASH="$(tput setaf $(__n2_rgb 5 5 3))"
 N2_FMT_PS1_LABEL="$(tput rev; tput setaf $(__n2_rgb 3 3 2))"
@@ -102,6 +109,9 @@ function __n2_fmt {
                 ;;
             ps1_perm_bad)
                 fmt_ctrl_seq+="$N2_FMT_PS1_PERM_BAD"
+                ;;
+            ps1_priority_*)
+                fmt_ctrl_seq+="${N2_FMT_PS1_PRIORITY[${i#ps1_priority_}]}"
                 ;;
             ps1_cwd)
                 fmt_ctrl_seq+="$N2_FMT_PS1_CWD"
