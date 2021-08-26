@@ -51,6 +51,9 @@ function __n2_short_hostname {
 }
 
 function __n2_ps1_nice {
+    # Only enables on Linux OS. BSD version nice doesn't print the nice value.
+    [ "$(uname -s)" != Linux ] && return 1
+
     __n2_has nice || return 1
     local n
     n=$(nice)
