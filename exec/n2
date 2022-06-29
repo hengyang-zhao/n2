@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-update() {
+function do_update {
     for dir in ~/.n2 ~/.m2*; do
         if [ -d "$dir" ]; then
             (
@@ -12,7 +12,7 @@ update() {
     done
 }
 
-status() {
+function do_status {
     for dir in ~/.n2 ~/.m2*; do
         if [ -d "$dir" ]; then
             (
@@ -24,13 +24,19 @@ status() {
     done
 }
 
+function do_help {
+    man n2
+}
 
 case "$1" in
     update)
-        update
+        do_update
         ;;
     status)
-        status
+        do_status
+        ;;
+    help)
+        do_help
         ;;
     *)
         echo "Unknown command: $1"
