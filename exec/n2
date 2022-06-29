@@ -12,9 +12,25 @@ update() {
     done
 }
 
+status() {
+    for dir in ~/.n2 ~/.m2*; do
+        if [ -d "$dir" ]; then
+            (
+                echo -e "Checking \e[033m$dir\e[0m"
+                cd "$dir"
+                git status
+            )
+        fi
+    done
+}
+
+
 case "$1" in
     update)
         update
+        ;;
+    status)
+        status
         ;;
     *)
         echo "Unknown command: $1"
