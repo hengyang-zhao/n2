@@ -19,30 +19,38 @@ GIT_CONFIG_PATH="$HOME/.gitconfig"
 
 AUTO_CONFIRM=no
 
+N2_ENTRANCE_BEGIN="=== N2 ENTRANCE BEGIN ==="
+N2_ENTRANCE_END="=== N2 ENTRANCE END ==="
+
 read -r -d '' BASHRC_SNIP << EOM || true
-# n2 installation
+# $N2_ENTRANCE_BEGIN
 source $N2_DIR/bash/rc
+# $N2_ENTRANCE_END
 EOM
 
 read -r -d '' BASH_PROFILE_SNIP << EOM || true
-# n2 installation
+# $N2_ENTRANCE_BEGIN
 source $N2_DIR/bash/profile
+# $N2_ENTRANCE_END
 EOM
 
 read -r -d '' VIMRC_SNIP << EOM || true
-" n2 installation
+" $N2_ENTRANCE_BEGIN
 execute "source" "$N2_DIR/vim/rc"
+" $N2_ENTRANCE_END
 EOM
 
 read -r -d '' TMUX_CONF_SNIP << EOM || true
-# n2 installation
+# $N2_ENTRANCE_BEGIN
 source-file $N2_DIR/tmux/conf
+# $N2_ENTRANCE_END
 EOM
 
 read -r -d '' GIT_CONFIG_SNIP << EOM || true
-# n2 installation
+# $N2_ENTRANCE_BEGIN
 [include]
     path = $N2_DIR/git/config
+# $N2_ENTRANCE_END
 EOM
 
 declare -A SNIPPETS=(
@@ -78,7 +86,7 @@ print_diff() {
     echo "Will apply diff to file $(fmt 1 <<< $path):"
 
     [ -e "$path" ] || path=/dev/null
-    (diff -C5 "$path" <(cat "$path" <(echo "$snippet")) || true) | fmt 34 | indent '  '
+    (diff -C5 "$path" <(cat "$path" <(echo "$snippet")) || true) | fmt 33 | indent '  '
 }
 
 is_installed() {
