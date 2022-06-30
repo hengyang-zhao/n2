@@ -29,5 +29,19 @@ __n2_list_hook_labels()
     )
 }
 
+__n2_infinite_bash_complete()
+{
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+
+    case "${#COMP_WORDS[@]}" in
+        2)
+            local opts="$(__n2_list_hook_labels)"
+            COMPREPLY=( $(compgen -W "${opts[*]}" -- "${cur}") )
+            ;;
+        *)
+            COMPREPLY=()
+    esac
+}
+
 complete -F __n2_infinite_bash_complete lab
 complete -F __n2_infinite_bash_complete bashtrap
