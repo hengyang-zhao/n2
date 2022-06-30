@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 echo
 echo "-----------------------------------------------------------------------"
@@ -16,3 +16,4 @@ done < "$INSTALLED_FILES"
 
 echo
 
+# TODO: Add an option to allow automated line removal
