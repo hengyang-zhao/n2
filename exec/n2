@@ -28,6 +28,32 @@ function do_help {
     man n2
 }
 
+function do_link_gitconfigs {
+    local IFS index target link linkdir
+    IFS=:
+    linkdir="$__N2_DIR/volatile/git"
+
+    rm -rf "$linkdir/link"*
+    mkdir -p "$linkdir"
+
+    index=0
+    for m2_dir in $__M2_DIRS; do
+        target="$m2_dir/git/config"
+
+        if ! [ -f "$target" ]; then
+            continue
+        fi
+
+        link="$linkdir/link$index"
+        cp -s "$target" "$link"
+        let index+=1
+        if [ "$index" -gt 9 ]; then
+            echo "You have too many M2 git configs!" >&2
+            exit 1
+        fi
+    done
+}
+
 case "$1" in
     update)
         do_update
@@ -37,6 +63,9 @@ case "$1" in
         ;;
     help)
         do_help
+        ;;
+    link-gitconfigs)
+        do_link_gitconfigs
         ;;
     *)
         echo "Unknown command: $1"

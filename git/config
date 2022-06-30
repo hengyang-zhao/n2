@@ -23,6 +23,9 @@
 [diff]
     statGraphWidth = 20
 
+[include]
+    path = /Users/hengyang.zhao/${__OMG}/git/config
+
 # vim: ft=gitconfig:
 
 
