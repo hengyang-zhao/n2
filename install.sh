@@ -54,12 +54,6 @@ read -r -d '' GIT_CONFIG_SNIP << EOM || true
     path = $N2_DIR/volatile/git/link1
     path = $N2_DIR/volatile/git/link2
     path = $N2_DIR/volatile/git/link3
-    path = $N2_DIR/volatile/git/link4
-    path = $N2_DIR/volatile/git/link5
-    path = $N2_DIR/volatile/git/link6
-    path = $N2_DIR/volatile/git/link7
-    path = $N2_DIR/volatile/git/link8
-    path = $N2_DIR/volatile/git/link9
 # $N2_ENTRANCE_END
 EOM
 
