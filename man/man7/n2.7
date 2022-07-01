@@ -2,7 +2,7 @@
 
 .SH NAME
 .B n2
-\- nonintrusive initialization decoupling for unix systems
+- The Final Solution of Dot-Files Management in Unix Systems
 
 .SH SYNOPSIS
 .B n2
@@ -11,280 +11,333 @@
 .SH DESCRIPTION
 Command
 .B n2
-facilitates management and information querying for project n2.  Project
-n2 provides version controlled initialization files for common unix tools,
-such as bash, vim, tmux, git, etc.
-
-.SH SUBCOMMAND
-.TP
-.B banner [ on | off ]
-turn on/off the startup banner
+Facilitates management and information querying for project n2.  Project n2
+provides version controlled initialization files for common unix tools, such as
+bash, vim, tmux, git, etc.
 
 .TP
-.B clean
-clean up backup directory
-
-.TP
-.B info
-show this man page
-
-.TP
-.B reinstall [ --overwrite-all ] [ --no-backup ] [ --force-legacy ]
-forward to the install.sh script and reinstall project n2; in most cases
-this is not required unless the version controlled n2 project directory is
-moved, or on major upgrade
+.B help
+Shows this man page. Same as
+.B man n2.
 
 .TP
 .B update
-update project n2 by issuing git pull on the current branch; a reinstall
-is not necessary unless on major update reception
+Updates project n2 and all discovered m2 repos by issuing git pull on the
+current branch.
 
-.SH DIRECTORY
-.TP
-\fB~/.n2_site_config/bash/profile/\fP or \fB~/.n/bash/profile/\fP
-stores site specific bash profiles; various path extensions are recommended
-to put here; this directory is not under version control; files are sourced
-in ascii order and recommended to be named like
-.I 00-example.sh
+.SH M2 DIRECTORY
 
-.TP
-\fB~/.n2_site_config/bash/rc/\fP or \fB~/.n/bash/rc/\fP
-stores site specific bash rc files; interactive enhancement configurations
-are recommended to put here; this directory is not under version control;
-files are sourced in ascii order and recommended to be named like
-.I 00-example.sh
-
-.TP
-\fB~/.n2_site_config/git/\fP or \fB~/.n/git/\fP
-stores stie specific git config files; currently only
-.I custom
+Project N2 allows customization by discovering M2 directories and picking up
+configurations under them. An M2 directory should be placed directly under
+.B
+$HOME
 and
-.I user
-are automatically in effect
+.B .m2
+should be the first three characters in its name. Valid examples are
+
+.EX
+    ~/.m2
+    ~/.m2-10-personal
+    ~/.m2-20-work
+.EE
+
+M2 driectories are discovered by their lexical order and the configurations are
+loaded in the same order. That means, in the previous examples, configurations
+under
+.B ~/.m2-20-work
+will override those in
+.B ~/.m2-10-personal
+when they conflict.
 
 .TP
-\fB~/.n2_site_config/tmux/\fP or \fB~/.n/tmux/\fP
-stores stie specific git config files; currently only
-.I custom.conf
-is automatically in effect
+.B ~/.m2*/bash/profile/*.sh
+Stores bash profiles. Path extensions and other non-idempotent configs are
+recommended to put here.  Files are sourced in ascii order and recommended to
+be named like
+.I 00-example.sh.
 
 .TP
-\fB~/.n2_site_config/vim/\fP or \fB~/.n/vim/\fP
-stores site specific vim rc files; this directory is not under version
-control; files are sourced in ascii order and recommended to be named like
-.I 00-example.vim
+.B ~/.m2*/bash/rc/*.sh
+
+Stores bash rc files. Interactive enhancement configurations, e.g. alias and
+functions definitions, and other idempotent configurations are recommended to
+put here. Files are sourced in ascii order and recommended to be named like
+.I 00-example.sh.
+
+Note: Don't do PATH append/prepending here. Use the profile dir instead. For
+example,
+
+.EX
+    export PATH="/my/favorite:$PATH"
+.EE
+
+would work when you put it either under
+.B rc
+or
+.B profile.
+However, files under
+.B rc
+will be sourced everytime when you do
+.B source ~/.bashrc
+and your
+.B PATH
+will be prepended multiple times. Unexpected precedence might happen.
 
 .TP
-\fB~/.n2_site_config/exec/\fP or \fB~/.n/exec/\fP
-stores site specific executables; this directory is automatically included
-in the PATH variable
+.B ~/.m2*/bash/git/config
+Stores git config files. Currently only
+.I config
+will take effect.
+
+.TP
+.B ~/.m2*/bash/tmux/conf
+Stores tmux configuration. Currently only
+.I conf
+will take effect.
+
+.TP
+.B ~/.m2*/bash/vim/*.vim
+Stores vim rc files. Files are sourced in ASCII order and recommended to be
+named like
+.I 00-example.vim.
+
+.TP
+.B ~/.m2*/exec
+Stores executables. This directory is automatically included in the PATH
+variable.
 
 .SH MODIFIED COMMAND
 .TP
 .B cd
-a modified version from Petar Marinov's acd_func
+A modified version from Petar Marinov's acd_func.
 
 .TP
 .B cd --
-print
+Print
 .B cd
-history up to 10 items
+history up to 10 items.
 
 .TP
 .B cd -#
 .B cd
-into history item '#'
+into history item '#'.
 
 .TP
 .B git
-aliased to \fBhub\fR, if available
+Aliased to
+.B hub
+if available.
 
 .SH ONE LETTER ALIASES
 
 .TP
-.B \-
+.B -
 cd ..
 
 .TP
-.B t
-attach to session 'main' in \fBtmux\fR; create if not exist
+.B t [session-name]
+Attachs to session
+.B session-name
+(defaults to "main") in
+.B tmux.
+Creates session if not exist.
 
 .SH TOY COMMAND
 
 .TP
 .B bashtrap [label]
-while true, do bash; no need to panic \-\-\- you have your way out
-
-.TP
+.TQ
 .B lab [label]
-same as bashtrap
+While true, do bash. No need to panic --- you have your way out :)
 
 .TP
-.B regex\-test
-an interactive environment for testing bash regular expression
+.B regex-test
+An interactive environment for testing bash regular expression.
 
 .TP
-.B perm\-stack
-print the permission stack of current directory and all parent directories
+.B perm-stack
+Prints the permission stack of current directory and all parent directories.
 
 .SH FEATURE VARIABLE
 
 .TP
 .B N2_ENABLE_STATUS_LINE
-enable status line after each command
+Enables status line after each command.
 
 .TP
 .B N2_THICK_SEPARATOR
-use thick separator (useful when a terminal does not support underline [tput smul])
+Uses thick separator (useful when a terminal does not support underline [tput
+smul]). The thick separator takes one extra line after each command to report
+the status.
 
 .TP
 .B N2_THICK_SEPARATOR_CHAR
-override filler char in the thick separator
+Overrides filler char in the thick separator.
 
 .TP
 .B N2_ENABLE_CMD_EXPANSION
-enable command expansion
+Enables command expansion. Before execution, the command will be analyzed and
+the true target will be printed. For example,
+.B pwd
+will be expanded as
 
-.TP
-.B N2_ENABLE_STATUS_LINE
-enable process status line
+.EX
+    builtin pwd
+.EE
+
+or
+
+.EX
+    /bin/pwd (or something similar)
+.EE
+
+depending on the configuration of enabling the bash pwd builtin.
 
 .TP
 .B N2_ENABLE_EXPLICIT_EOF
-(experimental) explicitly mark eof if last command did not end with a new-line character
+[experimental] Explicitly marks eof if last command did not end with a new-line
+character. This ensures that the next command prompt will always be printed
+at the line beginning.
 
 .TP
 .B N2_CMD_EXPANSION_SINK
-override the target fd when printing command expansion; default is the
-standard error fd: &2; allowed formats are: "/path/to/a/writtable/file" or &N
-where N is an open file descriptor
+Overrides the target fd when printing command expansion; default is the
+standard error fd: &2; allowed formats are:
+.B /path/to/a/writtable/file
+or
+.B &N
+where N is an open file descriptor.
 
 .TP
 .B N2_CMD_EXPANSION_SINK_PROXY_FD
-override the temporary allocated file descriptor used to relay the command
-expansion string; default value is 99
+Overrides the temporary allocated file descriptor used to relay the command
+expansion string. Default value is 99.
 
 .TP
 .B N2_AUTO_ATTACH_TMUX
-exec tmux automatically upon a remote login;
-valid options: yes, no (default)
+Whether to xxec tmux automatically upon a remote login.
+Valid options: yes, no (default).
 
 .TP
 .B N2_PS1_HOSTNAME
-force using this as hostname info in the bash PS1 prompt; needs export to be
-respected by tmux status panel
+Forces using this as hostname info in the bash PS1 prompt and tmux status panel
+(needs export).
 
 .TP
 .B N2_REPORT_UNBOUND_VARIABLE
-report unbound (undefined) variable substitution;
-valid options: yes (default), no
+Reports unbound (undefined) variable substitution.
+Valid options: yes (default), no.
 
 .SH STYLE VARIABLE
 
 .TP
 .B N2_FMT_PS1_HOSTNAME N2_FMT_PS1_HOSTNAME_ROOT
-override hostname style in bash PS1 prompt
+Overrides hostname style in bash PS1 prompt.
 
 .TP
 .B N2_FMT_PS1_USERNAME N2_FMT_PS1_USERNAME_ROOT
-override username style in bash PS1 prompt
+Overrides username style in bash PS1 prompt.
 
 .TP
 .B N2_FMT_PS1_USERHOST_PUNCT N2_FMT_PS1_USERHOST_PUNCT_ROOT
-override user and host punct style in bash PS1 prompt
+Overrides user and host punct style in bash PS1 prompt.
 
 .TP
 .B N2_FMT_PS1_IFS N2_FMT_PS1_IFS_VALUE
-override non-default IFS label and value in bash PS1 prompt
+Overrides non-default IFS label and value in bash PS1 prompt.
 
 .TP
 .B N2_FMT_PS1_CHROOT N2_FMT_PS1_CHROOT_ROOT
-override style for chroot indicator in bash PS1 prompt
+Overrides style for chroot indicator in bash PS1 prompt.
 
 .TP
 .B N2_FMT_PS1_BG_INDICATOR
-override style of number of background processes indicator in bash PS1 prompt
+Overrides style of number of background processes indicator in bash PS1 prompt.
 
 .TP
 .B N2_FMT_PS1_SHLVL_INDICATOR
-override style of shell level indicator in bash PS1 prompt
+Overrides style of shell level indicator in bash PS1 prompt.
 
 .TP
 .B N2_FMT_PS1_SCREEN_INDICATOR
-override style of GNU screen session indicator in bash PS1 prompt
+Overrides style of GNU screen session indicator in bash PS1 prompt.
 
 .TP
 .B N2_FMT_PS1_GIT_INDICATOR
-override style of git indicator in bash PS1 prompt
+Overrides style of git indicator in bash PS1 prompt.
 
 .TP
 .B N2_FMT_PS1_CWD
-override style of cwd in bash PS1 prompt
+Overrides style of cwd in bash PS1 prompt.
 
 .TP
 .B N2_FMT_PS1_PERM_GOOD N2_FMT_PS1_PERM_BAD
-override style of permission indicator
+Overrides style of permission indicator.
 
 .TP
 .B N2_FMT_PS1_PHYSICAL_CWD
-override style of automatic physical cwd indicator in bash PS1 prompt
+Overrides style of automatic physical cwd indicator in bash PS1 prompt.
 
 .TP
 .B N2_FMT_PS1_DOLLAR_HASH
-override style of the dollar/hash sign in bash PS1 prompt
+Overrides style of the dollar/hash sign in bash PS1 prompt.
 
 .TP
 .B N2_FMT_PS1_LABEL
-override style of the label field in bash PS1 prompt
+Overrides style of the label field in bash PS1 prompt.
 
 .TP
 .B N2_FMT_STATUS_OK
-override style of the process status-ok indicator
+Overrides style of the process status-ok indicator.
 
 .TP
 .B N2_FMT_STATUS_ERROR
-override style of the process status-error indicator
+Overrides style of the process status-error indicator.
 
 .TP
 .B N2_FMT_STATUS_HRULE
-override style of the process status line
+Overrides style of the process status line.
 
 .TP
 .B N2_FMT_CMD_EXPANSIONS
-override style of the command expansion lines
+Overrides style of the command expansion lines.
 
 .TP
 .B N2_FMT_PINNED_KEY N2_FMT_PINNED_VALUE N2_FMT_PINNED_PUNCT
-override style of the pinned variables
+Overrides style of the pinned variables.
 
 .SH HOOK
+
+Declare the following functions to achieve customized behaviors. N2 frame work
+will call these functions if they are declared, or use default behavior
+otherwise.
+
 .TP
-.B n2_hook_ps1_cwd
-reformat cwd field in bash PS1; cwd will be taken as the only argument;
-reformatted cwd should be inline-echoed; this hook is often useful when one
-wants to highlight a specific field in cwd; string substitutions of
+.B function n2_hook_ps1_cwd
+Reformats the cwd field in bash PS1. Argument $1 is the cwd. Reformatted cwd
+should be inline-echoed.  This hook is often useful when one wants to highlight
+a specific field in cwd; string substitutions of
 .B $(__n2_fmt ps1_cwd)
 and
 .B $(__n2_inline_echo)
-may be helpful; piping to GNU sed(1) taking advantage of regular expression is
-often desired
+may be helpful. Piping to GNU sed(1) to take advantage of regular expression is
+often helpful.
 
 .TP
-.B n2_hook_postcd
-do extra work after
+.B function n2_hook_postcd
+Dos extra work after
 .B cd
-command; arguments are ignored
+command. Arguments are ignored.
 
 .TP
-.B n2_hook_label_<LABEL>
-extra initialization for labelled session <LABEL>; besides cutomized code,
-function
+.B function n2_hook_label_<LABEL>
+Extra initialization for labelled session <LABEL> in
+.B lab
+or
+.B bashtrap.
+Helper function
 .B n2_define_pinned <VAR_NAME> <VAR_VALUE>
-can be used to define bash variables to be printed with the PS1
-
-.SH
-SEE ALSO
-bash(1), tmux(1), git(1), vim(1)
+can be used to define bash variables to be printed along with the PS1.
 
 .SH
 AUTHOR

@@ -4,7 +4,9 @@ function do_update {
     for dir in ~/.n2 ~/.m2*; do
         if [ -d "$dir" ]; then
             (
+                echo
                 echo -e "Updating \e[033m$dir\e[0m"
+                echo
                 cd "$dir"
                 git pull
             )
@@ -16,7 +18,9 @@ function do_status {
     for dir in ~/.n2 ~/.m2*; do
         if [ -d "$dir" ]; then
             (
+                echo
                 echo -e "Checking \e[033m$dir\e[0m"
+                echo
                 cd "$dir"
                 git status
             )
