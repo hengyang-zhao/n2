@@ -51,7 +51,7 @@ function do_link_gitconfigs {
         link="$linkdir/link$index"
         cp -s "$target" "$link"
         let index+=1
-        if [ "$index" -gt 9 ]; then
+        if [ "$index" -gt 4 ]; then
             echo "You have too many M2 git configs!" >&2
             exit 1
         fi
