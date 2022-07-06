@@ -1,3 +1,11 @@
+if [ ${BASH_VERSINFO[0]} -lt 4 ]; then
+    echo -
+    echo - Your bash version $BASH_VERSION is too low.
+    echo - N2 requires at least 4.x.
+    echo -
+    return 1
+fi
+
 __n2_get_root() {
     local source_path cwd
     cwd=$(cd "$(dirname "$BASH_SOURCE")"; pwd)

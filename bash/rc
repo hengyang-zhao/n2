@@ -1,3 +1,11 @@
+if [ ${BASH_VERSINFO[0]} -lt 4 ]; then
+    echo -
+    echo - Your bash version $BASH_VERSION is too low.
+    echo - N2 requires at least 4.x.
+    echo -
+    return 1
+fi
+
 source "$__N2_DIR/bash/common/debug.sh"
 
 if [ -f /etc/bashrc ]; then
