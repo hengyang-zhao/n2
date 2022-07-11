@@ -73,19 +73,80 @@ For more details, see `man n2`.
 
 ### Customizable bash PS1
 
-TBA
+By default, N2 has a rich bash [PS1](https:
+//www.gnu.org/software/bash/manual/html_node/Controlling-the-Prompt.html#Controlling-the-Prompt)
+promot. In addition to a colorful `user@host` and current working directory, it also has
+
+- a git repo/branch indicator;
+- the permission bits of the current directory if it's not readable or writable;
+- the nesting level of the current bash, if it's not the outermost one;
+- number of processes running in the background;
+- the physical cwd, if the appearing cwd is a symlink;
+
+and some less frequently ones
+
+- the nice value of current bash if it's not 0;
+- a chroot indicator honoring `debian_chroot`;
+- the session name if in a GNU screen session.
+
+To checkout the current prompt:
+
+    $ echo "$PS1"
+
+To customize this, just overwrite `PS1` in your M2 config.
 
 ### Informative tmux status bar
 
-TBA
+The status bar shows
+
+- hostname and session name;
+- the current TTY path if the session is multi-attached;
+- window list;
+- system load / number of cores;
+- date and time.
 
 ### Command expansion
 
-TBA
+Command expansion is the lines starting with `[#] -> XXX`, like
+
+    me@laptop ~
+    $ ls
+    [1] -> /opt/homebrew/opt/coreutils/libexec/gnubin/ls --color=auto (MM/DD/YYYY HH:MM:SS)
+    -- OUTPUT SKIPPED --
+
+or
+
+    me@laptop &1 ~
+    $ grep pattern < file | wc
+    [1] -> /usr/bin/grep --color=auto pattern < file (MM/DD/YYYY HH:MM:SS)
+    [2] -> /opt/homebrew/opt/coreutils/libexec/gnubin/wc (MM/DD/YYYY HH:MM:SS)
+    -- OUTPUT SKIPPED --
+
+or
+
+    me@laptop ~
+    $ echo hello && echo world
+    [1] -> builtin echo hello (MM/DD/YYYY HH:MM:SS)
+    hello
+    [2] -> builtin echo world (MM/DD/YYYY HH:MM:SS)
+    world
+
+Features include
+
+- telling if the command was an external command (by expanding its true path), or if it's a shell builtin;
+- timestamping the commands right before the command is executed;
+- breaking up commands by pipe operators and logical operators;
+- making sure that once a expansion is printed out, the command is starting to
+  execute --- this is especially useful when you copy-paste a command with a
+  trailing line-break character into bash, but you just don't know if it's
+  already executing or waiting for `ENTER`.
 
 ### Better status reporting
 
-TBA
+Automatically prints the status code and timestamp after a user input is
+completed. If it's a piped command, it prints out status code of each pipelet.
+The timestamp is often used together with the ones in command expansion to
+figure out how long a command was running for.
 
 ### Labs
 
