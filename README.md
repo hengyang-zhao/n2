@@ -1,6 +1,6 @@
 # Project N2
 
-**N2: The Final Solution of Dot-Files Management for Unix Systems**
+_The final solution of dot-file management for Unix systems_
 
 Project N2 aims to solving all the pain points in dot-file management, such as
 version control, modularization, etc. It also provides an informative and
