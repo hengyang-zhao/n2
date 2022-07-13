@@ -346,7 +346,7 @@ function __n2_do_before_command {
     # dereference an undefined variable and use its fallback substution, which
     # is an empty string. Turning on this option (-u) is therefore going to be
     # break these scripts, which are in fact stable, fortunately.
-    if [ "$__N2_COMMAND_SNO" = 1 ] && [ "${N2_REPORT_UNBOUND_VARIABLE:-yes}" = yes ]; then
+    if [ "$__N2_COMMAND_SNO" = 1 ] && [ "${N2_REPORT_UNBOUND_VARIABLE:-no}" = yes ]; then
         set -u
     fi
 }
@@ -358,7 +358,7 @@ function __n2_do_after_command {
     # command completion can work. Given this, the option is switched on/off
     # siliently, providing safer interactive variable substitution, in a not-
     # so-annoying way, hopefully.
-    if [ "${N2_REPORT_UNBOUND_VARIABLE:-yes}" = yes ]; then
+    if [ "${N2_REPORT_UNBOUND_VARIABLE:-no}" = yes ]; then
         set +u
     fi
 
