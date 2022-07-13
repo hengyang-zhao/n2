@@ -16,6 +16,10 @@ The installation tries to be stupid. It just append lines to your existing
 dot-files. It does not soft-link, backup, or overwrite your original files for
 you, which makes it less obvious when you wish to uninstall it later.
 
+You can also try N2 without installing:
+
+    .n2/try.sh
+
 ## Features
 
 ### Comes with a manual
@@ -147,12 +151,4 @@ Automatically prints the status code and timestamp after a user input is
 completed. If it's a piped command, it prints out status code of each pipelet.
 The timestamp is often used together with the ones in command expansion to
 figure out how long a command was running for.
-
-### Labs
-
-TBA
-
-### Toy box
-
-TBA
 
