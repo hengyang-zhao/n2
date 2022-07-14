@@ -12,13 +12,23 @@ customizable `bash`/`tmux` UI by default.
     git clone git@github.com:hengyang-zhao/n2.git .n2
     .n2/install.sh
 
-The installation tries to be stupid. It just append lines to your existing
+The installation tries to be stupid. It just appends lines to your existing
 dot-files. It does not soft-link, backup, or overwrite your original files for
-you, which makes it less obvious when you wish to uninstall it later.
+you, which makes it less obvious in case you wish to uninstall it later.
 
-You can also try N2 without installing:
+You can also install N2 to a playground outside of your `HOME`:
 
-    .n2/try.sh
+    PLAYGROUND=yes .n2/install.sh
+
+or
+
+    AUTO_CONFIRM=yes PLAYGROUND=yes .n2/install.sh
+
+Note: `AUTO_CONFIRM=yes` works in the regular (non-playground) mode too.
+
+Note: The cloned directory can be named and placed arbitrarily. It doesn't have
+to be `.n2` or placed directly under your `HOME`. But for M2 directories
+(optional, mentioned below), they have to follow the predefined pattern.
 
 ## Features
 
@@ -31,6 +41,10 @@ manual of project N2.
 
 You must already have some dot-files. Put them into M2 directory(s) and the
 version control will be easy.
+
+Note that you still have the freedom to keep your configs directly in the
+original place (i.e. `~/.bashrc`, `~/.vimrc`, etc). If you want to do so,
+please skip this section.
 
 An M2 directory is a directory under your `$HOME` and named like `.m2*`. When
 bash is initializing, N2 will enumerate all the M2 directories and source the

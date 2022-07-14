@@ -11,13 +11,17 @@ fi
 N2_DIR=$(cd "$(dirname "$0")"; pwd)
 INSTALLED_FILES="$N2_DIR/volatile/INSTALLED_FILES"
 
-BASHRC_PATH="$HOME/.bashrc"
-BASH_PROFILE_PATH="$HOME/.bash_profile"
-VIMRC_PATH="$HOME/.vimrc"
-TMUX_CONF_PATH="$HOME/.tmux.conf"
-GIT_CONFIG_PATH="$HOME/.gitconfig"
-
 AUTO_CONFIRM=${AUTO_CONFIRM:-no}
+PLAYGROUND=${PLAYGROUND:-no}
+
+ASSIGNED_HOME="$HOME"
+[ "$PLAYGROUND" == yes ] && ASSIGNED_HOME=$(mktemp -d)
+
+BASHRC_PATH="$ASSIGNED_HOME/.bashrc"
+BASH_PROFILE_PATH="$ASSIGNED_HOME/.bash_profile"
+VIMRC_PATH="$ASSIGNED_HOME/.vimrc"
+TMUX_CONF_PATH="$ASSIGNED_HOME/.tmux.conf"
+GIT_CONFIG_PATH="$ASSIGNED_HOME/.gitconfig"
 
 N2_ENTRANCE_BEGIN="=== N2 ENTRANCE BEGIN ==="
 N2_ENTRANCE_END="=== N2 ENTRANCE END ==="
@@ -94,6 +98,7 @@ print_diff() {
 }
 
 is_installed() {
+    [ "$PLAYGROUND" = yes ] && return 1
     local path line
     path="$1"
     [ -e $INSTALLED_FILES ] || return 1
@@ -104,6 +109,7 @@ is_installed() {
 }
 
 mark_installed() {
+    [ "$PLAYGROUND" = yes ] && return 0
     local path
     path="$1"
     echo "$path" >> "$INSTALLED_FILES"
@@ -170,13 +176,32 @@ banner() {
             echo "-- Welcome to N2 --- the next geration of N.I.D.U.S. --"
             echo "-------------------------------------------------------"
             echo
+            [ "$PLAYGROUND" == no ] && return 0
+            echo "Installing to playground dir: $ASSIGNED_HOME"
+            echo
             ;;
         jobdone)
-            echo
-            echo "---------------------------------------------------------"
-            echo "-- N2 installation complete. Please logout then login. --"
-            echo "---------------------------------------------------------"
-            echo
+            if [ "$PLAYGROUND" == yes ]; then
+                echo
+                echo "-------------------------------------------------"
+                echo "-- N2 installation complete. (playground mode) --"
+                echo "-------------------------------------------------"
+                echo
+                echo "Installed to playground dir: $ASSIGNED_HOME"
+                echo
+                echo "To try this installation:"
+                echo "    HOME='$ASSIGNED_HOME' bash --login"
+                echo
+                echo "To remove the playground:"
+                echo "    rm -rf '$ASSIGNED_HOME'"
+                echo
+            else
+                echo
+                echo "---------------------------------------------------------"
+                echo "-- N2 installation complete. Please logout then login. --"
+                echo "---------------------------------------------------------"
+                echo
+            fi
             ;;
         *)
             return 1
