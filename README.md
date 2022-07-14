@@ -2,13 +2,13 @@
 
 _The final solution of dot-file management for Unix systems_
 
-Project N2 aims to solving all the pain points in dot-file management, such as
-version control, modularization, etc. It also provides an informative and
-customizable `bash`/`tmux` UI by default.
+Project N2 aims to solve all the pain points in general dot-file management,
+such as version control, modularization, etc. It also provides an informative
+and customizable `bash`/`tmux` UI.
 
 ## Install
 
-    cd $HOME
+    cd "$HOME"
     git clone git@github.com:hengyang-zhao/n2.git .n2
     .n2/install.sh
 
@@ -20,33 +20,34 @@ You can also install N2 to a playground outside of your `HOME`:
 
     PLAYGROUND=yes .n2/install.sh
 
-or
+or (to save some confirmation typings)
 
     AUTO_CONFIRM=yes PLAYGROUND=yes .n2/install.sh
 
-Note: `AUTO_CONFIRM=yes` works in the regular (non-playground) mode too.
+> Note: `AUTO_CONFIRM=yes` works in the regular (non-playground) mode too.
 
-Note: The cloned directory can be named and placed arbitrarily. It doesn't have
-to be `.n2` or placed directly under your `HOME`. But for M2 directories
-(optional, mentioned below), they have to follow the predefined pattern.
+> Note: The cloned directory can be named and placed arbitrarily. It doesn't
+> have to be named `.n2` or placed directly under your `HOME`. But for M2
+> directories (optional feature, mentioned below), they have to follow the
+> predefined pattern.
 
 ## Features
 
 ### Comes with a manual
 
-Upon installation, you can just do `man n2` to pull up the full reference
-manual of project N2.
+After installation, you can just do `man n2` to pull up the N2 reference
+manual.
 
 ### M2 discovery
 
-You must already have some dot-files. Put them into M2 directory(s) and the
-version control will be easy.
+You must already have some configs in your dot-files. Move them into M2
+directory(s) such that they can be easily verson-controlled.
 
-Note that you still have the freedom to keep your configs directly in the
-original place (i.e. `~/.bashrc`, `~/.vimrc`, etc). If you want to do so,
-please skip this section.
+> Note that you still have the freedom to keep your configs directly in the
+> original place (i.e. `~/.bashrc`, `~/.vimrc`, etc). You can skip this feature
+> if you wish to do so.
 
-An M2 directory is a directory under your `$HOME` and named like `.m2*`. When
+An M2 directory is a directory under your `HOME` and named like `.m2*`. When
 bash is initializing, N2 will enumerate all the M2 directories and source the
 configurations under them. A typical M2 directory looks like this:
 
@@ -72,11 +73,11 @@ configurations under them. A typical M2 directory looks like this:
         ├── 20-another-config.vim
         └── not-starting-with-number-is-ok.vim
 
-Then you know where to put your old dot-files. Just follow the same structure.
+Then you know where to put your old configs.
 
 You also have the freedom to have multiple M2 directories. This becomes useful
-when you want to separate your M2 dirs for personal use and work. If this is the
-case, a typical home directory will look like this:
+when you want to separate your M2 dirs for personal use and work. If this is
+the case, a typical home directory will look like this:
 
     ~
     ├── .n2
@@ -84,16 +85,16 @@ case, a typical home directory will look like this:
     ├── .m2-20-work
     └── MyOtherStuff
 
-Note that the M2 directories are discovered in lexical order. Those wierd
-looking infixes `-10-` and `-20-` are just to control that order.
+Note that the M2 directories are discovered in lexical order. Those odd-looking
+infixes `-10-` and `-20-` are just to control that order.
 
 For more details, see `man n2`.
 
 ### Customizable bash PS1
 
-By default, N2 has a rich bash [PS1](https:
-//www.gnu.org/software/bash/manual/html_node/Controlling-the-Prompt.html#Controlling-the-Prompt)
-promot. In addition to a colorful `user@host` and current working directory, it also has
+By default, N2 has a rich bash [PS1](https://www.gnu.org/software/bash/manual/html_node/Controlling-the-Prompt.html#Controlling-the-Prompt)
+prompt. In addition to a colorful `user@host` and current working directory, it
+also has
 
 - a git repo/branch indicator;
 - the permission bits of the current directory if it's not readable or writable;
@@ -101,7 +102,7 @@ promot. In addition to a colorful `user@host` and current working directory, it 
 - number of processes running in the background;
 - the physical cwd, if the appearing cwd is a symlink;
 
-and some less frequently ones
+and some less frequent ones
 
 - the nice value of current bash if it's not 0;
 - a chroot indicator honoring `debian_chroot`;
@@ -111,7 +112,7 @@ To checkout the current prompt:
 
     $ echo "$PS1"
 
-To customize this, just overwrite `PS1` in your M2 config.
+To customize this, just overwrite `PS1` in your M2 configs.
 
 ### Informative tmux status bar
 
@@ -125,7 +126,7 @@ The status bar shows
 
 ### Command expansion
 
-Command expansion is the lines starting with `[#] -> XXX`, like
+Command expansion is the lines starting with `[#] -> XXX`, for example
 
     me@laptop ~
     $ ls
@@ -151,7 +152,8 @@ or
 
 Features include
 
-- telling if the command was an external command (by expanding its true path), or if it's a shell builtin;
+- telling if the command was an external command (by expanding its true path),
+  or if it's a shell builtin;
 - timestamping the commands right before the command is executed;
 - breaking up commands by pipe operators and logical operators;
 - making sure that once a expansion is printed out, the command is starting to
