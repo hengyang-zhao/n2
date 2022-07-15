@@ -24,9 +24,11 @@ or (to save some confirmation typings)
 
     AUTO_CONFIRM=yes PLAYGROUND=yes .n2/install.sh
 
-> Note: `AUTO_CONFIRM=yes` works in the regular (non-playground) mode too.
+> **Note** <br/>
+> `AUTO_CONFIRM=yes` works in the regular (non-playground) mode too.
 
-> Note: The cloned directory can be named and placed arbitrarily. It doesn't
+> **Note** <br/>
+> The cloned directory can be named and placed arbitrarily. It doesn't
 > have to be named `.n2` or placed directly under your `HOME`. But for M2
 > directories (optional feature, mentioned below), they have to follow the
 > predefined pattern.
@@ -43,8 +45,9 @@ manual.
 You must already have some configs in your dot-files. Move them into M2
 directory(s) such that they can be easily verson-controlled.
 
-> Note that you still have the freedom to keep your configs directly in the
-> original place (i.e. `~/.bashrc`, `~/.vimrc`, etc). You can skip this feature
+> **Note** <br/>
+> You still have the freedom to keep your configs directly in the
+> original place (i.e. `~/.bashrc`, `~/.vimrc`, etc). You can skip this section
 > if you wish to do so.
 
 An M2 directory is a directory under your `HOME` and named like `.m2*`. When
@@ -85,7 +88,8 @@ the case, a typical home directory will look like this:
     ├── .m2-20-work
     └── MyOtherStuff
 
-Note that the M2 directories are discovered in lexical order. Those odd-looking
+> **Note** <br/>
+> The M2 directories are discovered in lexical order. Those odd-looking
 infixes `-10-` and `-20-` are just to control that order.
 
 For more details, see `man n2`.
