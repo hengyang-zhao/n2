@@ -46,8 +46,8 @@ You must already have some configs in your dot-files. Move them into M2
 directory(s) such that they can be easily verson-controlled.
 
 > **Note** <br/>
-> You still have the freedom to keep your configs directly in the
-> original place (i.e. `~/.bashrc`, `~/.vimrc`, etc). You can skip this section
+> You still have the freedom to keep your configs in their
+> original places, i.e., `~/.bashrc`, `~/.vimrc`, etc. You can skip this section
 > if you wish to do so.
 
 An M2 directory is a directory under your `HOME` and named like `.m2*`. When
