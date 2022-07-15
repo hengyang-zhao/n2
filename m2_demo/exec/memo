@@ -1,0 +1,8 @@
+#!/bin/sh
+
+echo "router-password: 02ef7cb838dd7919"
+echo "testing-iphone-pin: 3333"
+
+echo "bank-password: never"
+echo "google-password: never"
+

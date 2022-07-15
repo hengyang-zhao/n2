@@ -1,0 +1,14 @@
+# See tmux manual for details
+#
+# set -g mode-keys vi
+# set -g clock-mode-style 12
+#
+# set -g history-limit 4096
+# set -g allow-rename off
+#
+# set -g renumber-windows on
+# setw -g aggressive-resize on
+#
+# set -g default-terminal "screen-256color"
+
+# vim: ft=tmux:
