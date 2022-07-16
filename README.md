@@ -107,6 +107,7 @@ and some less frequent ones
 - the nice value of current bash if it's not 0;
 - a chroot indicator honoring `debian_chroot`;
 - the session name if in a GNU screen session.
+- `IFS` value if not default (`\x20\x09\x0a`)
 
 To checkout the current prompt:
 

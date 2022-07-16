@@ -199,6 +199,26 @@ function __n2_ps1_cwd {
     return 0
 }
 
+function __n2_ps1_non_default_ifs {
+    if [[ "${#IFS}" == 3 && "$IFS" == *" "* && "$IFS" == *$'\t'* && "$IFS" == *$'\n'* ]]; then
+        return 1
+    fi
+
+    __n2_fmt ps1_ifs zero_width
+    __n2_inline_echo "(IFS="
+    __n2_reset_fmt zero_width
+
+    __n2_fmt ps1_ifs_value zero_width
+    printf "%q" "$IFS"
+    __n2_reset_fmt zero_width
+
+    __n2_fmt ps1_ifs zero_width
+    __n2_inline_echo ")"
+    __n2_reset_fmt zero_width
+
+    return 0
+}
+
 function __n2_ps1_physical_cwd {
     local physical_cwd="$(pwd -P)"
     if [ "$physical_cwd" != "$(pwd)" ]; then
@@ -284,6 +304,7 @@ PS1='$(
     (
         __n2_ps1_label            && __n2_ps1_space
         __n2_ps1_dollar_hash "\$" && __n2_ps1_space
+        __n2_ps1_non_default_ifs  && __n2_ps1_space
     ) | (
         __n2_prefix_line_if_labeled "$N2_FMT_PS1_TAIL_PREFIX"
     )

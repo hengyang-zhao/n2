@@ -44,6 +44,8 @@ N2_FMT_PS1_PHYSICAL_CWD="$(tput setaf $(__n2_gray 12))"
 N2_FMT_PS1_DOLLAR_HASH="$(tput setaf $(__n2_rgb 5 5 3))"
 N2_FMT_PS1_LABEL="$(tput rev; tput setaf $(__n2_rgb 3 3 2))"
 N2_FMT_PS1_PREFIX="$(tput setaf $(__n2_rgb 3 3 2))"
+N2_FMT_PS1_IFS="$(tput setaf $(__n2_rgb 4 4 2))"
+N2_FMT_PS1_IFS_VALUE="$(tput bold; tput smul)"
 N2_FMT_STATUS_OK="$(tput setaf $(__n2_rgb 0 2 1))"
 N2_FMT_STATUS_ERROR="$(tput setaf $(__n2_rgb 5 1 2))"
 N2_FMT_CMD_EXPANSIONS="$(tput setaf $(__n2_gray 10))"
@@ -51,6 +53,7 @@ N2_FMT_FORCE_NEWLINE="$(tput rev; tput setaf $(__n2_rgb 2 2 1))"
 N2_FMT_PINNED_KEY="$(tput setaf $(__n2_rgb 3 2 0))"
 N2_FMT_PINNED_VALUE="$(tput setaf $(__n2_rgb 1 1 0))"
 N2_FMT_PINNED_PUNCT="$(tput setaf $(__n2_gray 8))"
+
 
 N2_FMT_PS1_HEAD_PREFIX=
 N2_FMT_PS1_MID_PREFIX=
@@ -124,6 +127,12 @@ function __n2_fmt {
                 ;;
             ps1_label)
                 fmt_ctrl_seq+="$N2_FMT_PS1_LABEL"
+                ;;
+            ps1_ifs)
+                fmt_ctrl_seq+="$N2_FMT_PS1_IFS"
+                ;;
+            ps1_ifs_value)
+                fmt_ctrl_seq+="$N2_FMT_PS1_IFS_VALUE"
                 ;;
             status_ok)
                 fmt_ctrl_seq+="$N2_FMT_STATUS_OK"
