@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+function print_all_args {
+    local i=0
+    for arg; do
+        echo "[$i] = '$arg'"
+        let i=i+1
+    done
+}
+
+print_all_args "$0" "$@"
+
