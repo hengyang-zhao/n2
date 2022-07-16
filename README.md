@@ -24,9 +24,11 @@ or (to save some confirmation typings)
 
     AUTO_CONFIRM=yes PLAYGROUND=yes .n2/install.sh
 
-> Note: `AUTO_CONFIRM=yes` works in the regular (non-playground) mode too.
+> **Note** <br/>
+> `AUTO_CONFIRM=yes` works in the regular (non-playground) mode too.
 
-> Note: The cloned directory can be named and placed arbitrarily. It doesn't
+> **Note** <br/>
+> The cloned directory can be named and placed arbitrarily. It doesn't
 > have to be named `.n2` or placed directly under your `HOME`. But for M2
 > directories (optional feature, mentioned below), they have to follow the
 > predefined pattern.
@@ -43,8 +45,9 @@ manual.
 You must already have some configs in your dot-files. Move them into M2
 directory(s) such that they can be easily verson-controlled.
 
-> Note that you still have the freedom to keep your configs directly in the
-> original place (i.e. `~/.bashrc`, `~/.vimrc`, etc). You can skip this feature
+> **Note** <br/>
+> You still have the freedom to keep your configs in their
+> original places, i.e., `~/.bashrc`, `~/.vimrc`, etc. You can skip this section
 > if you wish to do so.
 
 An M2 directory is a directory under your `HOME` and named like `.m2*`. When
@@ -75,6 +78,17 @@ configurations under them. A typical M2 directory looks like this:
 
 Then you know where to put your old configs.
 
+If you don't like creating an M2 directory from scratch, N2 can automatically
+create one:
+
+    n2 create-m2
+
+The demo M2 dir is a good start point. It already has several files to help you
+customize N2 and add personal configs.
+
+> **Tip** <br/>
+> Version-controlling your M2 dir is often a good idea.
+
 You also have the freedom to have multiple M2 directories. This becomes useful
 when you want to separate your M2 dirs for personal use and work. If this is
 the case, a typical home directory will look like this:
@@ -85,7 +99,8 @@ the case, a typical home directory will look like this:
     ├── .m2-20-work
     └── MyOtherStuff
 
-Note that the M2 directories are discovered in lexical order. Those odd-looking
+> **Note** <br/>
+> The M2 directories are discovered in lexical order. Those odd-looking
 infixes `-10-` and `-20-` are just to control that order.
 
 For more details, see `man n2`.

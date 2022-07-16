@@ -28,7 +28,7 @@ function do_status {
     done
 }
 
-function do_help {
+function do_man {
     man n2
 }
 
@@ -58,6 +58,27 @@ function do_link_gitconfigs {
     done
 }
 
+function do_create_n2 {
+    local m2_dir
+    m2_dir="$HOME/.m2-00-demo"
+
+    echo
+    echo -e "Creating a demo M2 dir \e[033m$m2_dir\e[0m"
+    echo
+
+    if [ -e "$m2_dir" ]; then
+        echo -e "\e[031mAlready exists. Giving up.\e[0m"
+        return 1
+    fi
+
+    cp -vr "$__N2_DIR/m2_demo" "$m2_dir"
+
+    echo
+    echo Wrote "$m2_dir".
+    echo You can now explore the directory and start version-control it.
+    echo
+}
+
 case "$1" in
     update)
         do_update
@@ -65,11 +86,14 @@ case "$1" in
     status)
         do_status
         ;;
-    help)
-        do_help
+    help | info | '?')
+        do_man
         ;;
     link-gitconfigs)
         do_link_gitconfigs
+        ;;
+    create-m2)
+        do_create_n2
         ;;
     *)
         echo "Unknown command: $1"
