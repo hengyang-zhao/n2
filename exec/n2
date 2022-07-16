@@ -28,7 +28,7 @@ function do_status {
     done
 }
 
-function do_help {
+function do_man {
     man n2
 }
 
@@ -60,7 +60,7 @@ function do_link_gitconfigs {
 
 function do_create_n2 {
     local m2_dir
-    m2_dir="$HOME/.m2_demo"
+    m2_dir="$HOME/.m2-00-demo"
 
     echo
     echo -e "Creating a demo M2 dir \e[033m$m2_dir\e[0m"
@@ -71,7 +71,7 @@ function do_create_n2 {
         return 1
     fi
 
-    cp -r "$__N2_DIR/m2_demo" "$m2_dir"
+    cp -vr "$__N2_DIR/m2_demo" "$m2_dir"
 
     echo
     echo Wrote "$m2_dir".
@@ -86,8 +86,8 @@ case "$1" in
     status)
         do_status
         ;;
-    help)
-        do_help
+    help | info | '?')
+        do_man
         ;;
     link-gitconfigs)
         do_link_gitconfigs

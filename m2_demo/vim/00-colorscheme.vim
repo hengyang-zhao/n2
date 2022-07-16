@@ -1,5 +1,5 @@
-# Use a non-default colorscheme
-#
-# silent! colorscheme koehler
-#
+" Use a non-default colorscheme
+"
+" silent! colorscheme koehler
+"
 

@@ -78,6 +78,17 @@ configurations under them. A typical M2 directory looks like this:
 
 Then you know where to put your old configs.
 
+If you don't like creating an M2 directory from scratch, N2 can automatically
+create one:
+
+    n2 create-m2
+
+The demo M2 dir is a good start point. It already has several files to help you
+customize N2 and add personal configs.
+
+> **Tip** <br/>
+> Version-controlling your M2 dir is often a good idea.
+
 You also have the freedom to have multiple M2 directories. This becomes useful
 when you want to separate your M2 dirs for personal use and work. If this is
 the case, a typical home directory will look like this:

@@ -6,7 +6,7 @@ __n2_complete()
 
     case "${#COMP_WORDS[@]}" in
         2)
-            opts="update status help link-gitconfigs create-m2"
+            opts="update status help info ? link-gitconfigs create-m2"
             COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
             ;;
         *)

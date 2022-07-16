@@ -4,3 +4,5 @@
 [user]
     name = Doctor Who
     email = dr.who@gmail.com
+
+# vim: set ft=gitconfig:
