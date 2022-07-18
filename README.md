@@ -126,7 +126,7 @@ and some less frequent ones
 
 To checkout the current prompt:
 
-    $ echo "$PS1"
+    echo "$PS1"
 
 To customize this, just overwrite `PS1` in your M2 configs.
 
