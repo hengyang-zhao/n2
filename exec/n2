@@ -58,7 +58,7 @@ function do_link_gitconfigs {
     done
 }
 
-function do_create_n2 {
+function do_create_m2 {
     local m2_dir
     m2_dir="$HOME/.m2-00-demo"
 
@@ -79,6 +79,10 @@ function do_create_n2 {
     echo
 }
 
+function do_list_m2 {
+    ls -1d ~/.m2*
+}
+
 case "$1" in
     update)
         do_update
@@ -93,7 +97,10 @@ case "$1" in
         do_link_gitconfigs
         ;;
     create-m2)
-        do_create_n2
+        do_create_m2
+        ;;
+    list-m2)
+        do_list_m2
         ;;
     *)
         echo "Unknown command: $1"
