@@ -1,1 +1,1 @@
-set modelines=1
+set modelines=5
