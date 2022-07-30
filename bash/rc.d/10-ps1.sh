@@ -139,7 +139,7 @@ function __n2_ps1_git_indicator {
             if [ "$gbr" = HEAD ]; then
                 gbr="$(git rev-parse HEAD 2>/dev/null | head -c8)"
             fi
-            groot="$(basename ///$(git rev-parse --show-toplevel) 2>/dev/null)"
+            groot="$(basename ///"$(git rev-parse --show-toplevel 2>/dev/null)")"
 
             if [ "${#groot}" -gt 12 ]; then
                 groot="${groot: 0:8}\`${groot: -3:3}"
