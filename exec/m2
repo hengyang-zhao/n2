@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+function do_list {
+    ls -1d ~/.m2*
+}
+
+function do_create {
+    local m2_dir
+    m2_dir="$HOME/.m2-00-demo"
+
+    echo
+    echo -e "Creating a demo M2 dir \e[033m$m2_dir\e[0m"
+    echo
+
+    if [ -e "$m2_dir" ]; then
+        echo -e "\e[031mAlready exists. Giving up.\e[0m"
+        return 1
+    fi
+
+    cp -vr "$__N2_DIR/m2_demo" "$m2_dir"
+
+    echo
+    echo Wrote "$m2_dir".
+    echo You can now explore the directory and start version-control it.
+    echo
+}
+
+function do_man {
+    man m2
+}
+
+case "$1" in
+    create)
+        do_create
+        ;;
+    list)
+        do_list
+        ;;
+    help | info | '?')
+        do_man
+        ;;
+    *)
+        echo "Unknown command: $1"
+        exit 1
+        ;;
+esac
+
+# vim: set ft=bash:
+

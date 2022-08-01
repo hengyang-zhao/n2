@@ -77,10 +77,21 @@ function do_create_m2 {
     echo Wrote "$m2_dir".
     echo You can now explore the directory and start version-control it.
     echo
+    echo
+    echo DEPRECATED: Please use the following command instead.
+    echo
+    echo     m2 create
+    echo
 }
 
 function do_list_m2 {
     ls -1d ~/.m2*
+    echo
+    echo
+    echo "DEPRECATED: Please use the following command instead."
+    echo
+    echo "    m2 create"
+    echo
 }
 
 case "$1" in
@@ -107,3 +118,6 @@ case "$1" in
         exit 1
         ;;
 esac
+
+# vim: set ft=bash:
+

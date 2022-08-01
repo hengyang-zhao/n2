@@ -1,6 +1,6 @@
 __n2_complete()
 {
-    local cur opts subcmd
+    local cur opts
 
     cur="${COMP_WORDS[COMP_CWORD]}"
 
@@ -14,6 +14,23 @@ __n2_complete()
     esac
 }
 complete -F __n2_complete n2
+
+__m2_complete()
+{
+    local cur opts
+
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    case "${#COMP_WORDS[@]}" in
+        2)
+            opts="create list help info ?"
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            ;;
+        *)
+            COMPREPLY=()
+    esac
+}
+complete -F __m2_complete m2
 
 __n2_list_hook_labels()
 {
