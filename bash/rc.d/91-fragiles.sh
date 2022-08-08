@@ -19,8 +19,6 @@ __n2_infinite_bash()
 alias bashtrap=__n2_infinite_bash
 alias lab=__n2_infinite_bash
 
-__n2_has hub && alias git=hub
-
 function __petar_marinov_cd_func {
 
     local x2 the_new_dir adir index
