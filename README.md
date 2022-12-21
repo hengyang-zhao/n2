@@ -1,8 +1,8 @@
-# Project N2
+# Project N<sub>2</sub>
 
 _The final solution of dot-file management for Unix systems_
 
-Project N2 aims to solve all the pain points in general dot-file management,
+Project N<sub>2</sub> aims to solve all the pain points in general dot-file management,
 such as version control, modularization, etc. It also provides an informative
 and customizable `bash`/`tmux` UI.
 
@@ -16,7 +16,7 @@ The installation tries to be stupid. It just appends lines to your existing
 dot-files. It does not soft-link, backup, or overwrite your original files for
 you, which makes it less obvious in case you wish to uninstall it later.
 
-You can also install N2 to a playground outside of your `HOME`:
+You can also install N<sub>2</sub> to a playground outside of your `HOME`:
 
     PLAYGROUND=yes .n2/install.sh
 
@@ -29,7 +29,7 @@ or (to save some confirmation typings)
 
 > **Note** <br/>
 > The cloned directory can be named and placed arbitrarily. It doesn't
-> have to be named `.n2` or placed directly under your `HOME`. But for M2
+> have to be named `.n2` or placed directly under your `HOME`. But for M<sub>2</sub>
 > directories (optional feature, mentioned below), they have to follow the
 > predefined pattern.
 
@@ -37,12 +37,12 @@ or (to save some confirmation typings)
 
 ### Comes with a manual
 
-After installation, you can just do `man n2` to pull up the N2 reference
+After installation, you can just do `man n2` to pull up the N<sub>2</sub> reference
 manual.
 
-### M2 discovery
+### M<sub>2</sub> discovery
 
-You must already have some configs in your dot-files. Move them into M2
+You must already have some configs in your dot-files. Move them into M<sub>2</sub>
 directory(s) such that they can be easily verson-controlled.
 
 > **Note** <br/>
@@ -50,9 +50,9 @@ directory(s) such that they can be easily verson-controlled.
 > original places, i.e., `~/.bashrc`, `~/.vimrc`, etc. You can skip this section
 > if you wish to do so.
 
-An M2 directory is a directory under your `HOME` and named like `.m2*`. When
-bash is initializing, N2 will enumerate all the M2 directories and source the
-configurations under them. A typical M2 directory looks like this:
+An M<sub>2</sub> directory is a directory under your `HOME` and named like `.m2*`. When
+bash is initializing, N<sub>2</sub> will enumerate all the M<sub>2</sub> directories and source the
+configurations under them. A typical M<sub>2</sub> directory looks like this:
 
     ~/.m2
     ├── bash
@@ -78,19 +78,19 @@ configurations under them. A typical M2 directory looks like this:
 
 Then you know where to put your old configs.
 
-If you don't like creating an M2 directory from scratch, N2 can automatically
+If you don't like creating an M<sub>2</sub> directory from scratch, N<sub>2</sub> can automatically
 create one:
 
     n2 create-m2
 
-The demo M2 dir is a good start point. It already has several files to help you
-customize N2 and add personal configs.
+The demo M<sub>2</sub> dir is a good start point. It already has several files to help you
+customize N<sub>2</sub> and add personal configs.
 
 > **Tip** <br/>
-> Version-controlling your M2 dir is often a good idea.
+> Version-controlling your M<sub>2</sub> dir is often a good idea.
 
-You also have the freedom to have multiple M2 directories. This becomes useful
-when you want to separate your M2 dirs for personal use and work. If this is
+You also have the freedom to have multiple M<sub>2</sub> directories. This becomes useful
+when you want to separate your M<sub>2</sub> dirs for personal use and work. If this is
 the case, a typical home directory will look like this:
 
     ~
@@ -100,14 +100,14 @@ the case, a typical home directory will look like this:
     └── MyOtherStuff
 
 > **Note** <br/>
-> The M2 directories are discovered in lexical order. Those odd-looking
+> The M<sub>2</sub> directories are discovered in lexical order. Those odd-looking
 infixes `-10-` and `-20-` are just to control that order.
 
 For more details, see `man n2`.
 
 ### Customizable bash PS1
 
-By default, N2 has a rich bash [PS1](https://www.gnu.org/software/bash/manual/html_node/Controlling-the-Prompt.html#Controlling-the-Prompt)
+By default, N<sub>2</sub> has a rich bash [PS1](https://www.gnu.org/software/bash/manual/html_node/Controlling-the-Prompt.html#Controlling-the-Prompt)
 prompt. In addition to a colorful `user@host` and current working directory, it
 also has
 
@@ -128,7 +128,7 @@ To checkout the current prompt:
 
     echo "$PS1"
 
-To customize this, just overwrite `PS1` in your M2 configs.
+To customize this, just overwrite `PS1` in your M<sub>2</sub> configs.
 
 ### Informative tmux status bar
 
