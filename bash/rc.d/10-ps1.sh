@@ -1,5 +1,27 @@
 __N2_COMMAND_SNO=0
 __N2_COMMAND_ERRNO=0
+__N2_COMMAND_UNIX_MILLIS=0
+
+function __n2_unix_millis {
+    echo $(($(date +%s%N)/1000000))
+}
+
+function __n2_pretty_duration {
+    local seconds sec min hr
+    seconds=$(("$1" / 1000))
+
+    local hr=$((seconds / 3600))
+    local min=$((seconds % 3600 / 60))
+    local sec=$((seconds % 60))
+
+    if [[ "$hr" > 0 ]]; then
+        echo "${hr}h ${min}m"
+    elif [[ "$min" > 0 ]]; then
+        echo "${min}m ${sec}s"
+    else
+        echo "${sec}s"
+    fi
+}
 
 function __n2_prefix_line_if_labeled {
     local label=${N2_PS1_LABEL:-}
@@ -318,6 +340,11 @@ function __n2_do_before_command {
     if [ "$BASH_COMMAND" = __n2_do_after_command ]; then
         return
     fi
+
+    if [ "$__N2_COMMAND_SNO" = 0 ]; then
+        __N2_COMMAND_UNIX_MILLIS=$(__n2_unix_millis)
+    fi
+
     let '__N2_COMMAND_SNO += 1'
 
     if [ "${N2_ENABLE_CMD_EXPANSION:-yes}" = no ]; then
@@ -383,7 +410,7 @@ function __n2_do_after_command {
         set +u
     fi
 
-    local eno ts
+    local eno ts wall
     local ret=OK
 
     __n2_force_newline
@@ -395,7 +422,7 @@ function __n2_do_after_command {
             return
         fi
 
-        ts=$(date +"%m/%d/%Y %H:%M:%S")
+        ts=$(date +"%Y-%m-%d %H:%M:%S")
         for eno in $__N2_COMMAND_ERRNO; do
             if [ $eno -ne 0 ]; then
                 ret=ERR
@@ -411,10 +438,12 @@ function __n2_do_after_command {
             __n2_fmt status_error
         fi
 
+        wall=$(__n2_pretty_duration $(($(__n2_unix_millis) - $__N2_COMMAND_UNIX_MILLIS)))
+
         if [ $ret = OK ]; then
-            printf "%${COLUMNS}s\n" "$ts [ Status OK ]"
+            printf "%${COLUMNS}s\n" "$ts ($wall) [ Status OK ]"
         else
-            printf "%${COLUMNS}s\n" "$ts [ Exception code $__N2_COMMAND_ERRNO ]"
+            printf "%${COLUMNS}s\n" "$ts ($wall) [ Error $__N2_COMMAND_ERRNO ]"
         fi
 
         if [ "${N2_THICK_SEPARATOR:-no}" = yes ]; then
