@@ -3,7 +3,7 @@ __N2_COMMAND_ERRNO=0
 __N2_COMMAND_UNIX_MILLIS=0
 
 function __n2_unix_millis {
-    echo $(($(date +%s%N)/1000000))
+    date +%s%03N
 }
 
 function __n2_pretty_date {
