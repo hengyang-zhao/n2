@@ -6,6 +6,10 @@ function __n2_unix_millis {
     echo $(($(date +%s%N)/1000000))
 }
 
+function __n2_pretty_date {
+    date +"%H:%M:%S %b %d"
+}
+
 function __n2_pretty_duration {
     local seconds sec min hr
     seconds=$(("$1" / 1000))
@@ -15,9 +19,9 @@ function __n2_pretty_duration {
     local sec=$((seconds % 60))
 
     if [[ "$hr" > 0 ]]; then
-        echo "${hr}h ${min}m"
+        echo "${hr}h${min}m"
     elif [[ "$min" > 0 ]]; then
-        echo "${min}m ${sec}s"
+        echo "${min}m${sec}s"
     else
         echo "${sec}s"
     fi
@@ -372,7 +376,7 @@ function __n2_do_before_command {
 
     local sink=${N2_CMD_EXPANSION_SINK:-&2}
     local proxy_fd=${N2_CMD_EXPANSION_SINK_PROXY_FD:-99}
-    local stat_str="[$__N2_COMMAND_SNO] -> ${cmd_tokens[@]} ($(date +'%m/%d/%Y %H:%M:%S'))"
+    local stat_str="[$__N2_COMMAND_SNO] -> ${cmd_tokens[@]} ($(__n2_pretty_date))"
     local safe_stat_str="$(cat -v <<< "$stat_str")"
 
     if [ -w "$sink" ]; then
@@ -410,7 +414,7 @@ function __n2_do_after_command {
         set +u
     fi
 
-    local eno ts wall
+    local eno ts wall status
     local ret=OK
 
     __n2_force_newline
@@ -422,7 +426,7 @@ function __n2_do_after_command {
             return
         fi
 
-        ts=$(date +"%Y-%m-%d %H:%M:%S")
+        ts=$(__n2_pretty_date)
         for eno in $__N2_COMMAND_ERRNO; do
             if [ $eno -ne 0 ]; then
                 ret=ERR
@@ -441,10 +445,12 @@ function __n2_do_after_command {
         wall=$(__n2_pretty_duration $(($(__n2_unix_millis) - $__N2_COMMAND_UNIX_MILLIS)))
 
         if [ $ret = OK ]; then
-            printf "%${COLUMNS}s\n" "$ts ($wall) [ Status OK ]"
+            status="Status OK"
         else
-            printf "%${COLUMNS}s\n" "$ts ($wall) [ Error $__N2_COMMAND_ERRNO ]"
+            status="Error $__N2_COMMAND_ERRNO"
         fi
+
+        printf "%${COLUMNS}s\n" "$ts | $wall | $status"
 
         if [ "${N2_THICK_SEPARATOR:-no}" = yes ]; then
             printf "%${COLUMNS}s\n" "" | tr " " "${N2_THICK_SEPARATOR_CHAR:-~}"
@@ -452,3 +458,5 @@ function __n2_do_after_command {
         __n2_reset_fmt
     fi
 }
+
+# vim: set ft=bash:
