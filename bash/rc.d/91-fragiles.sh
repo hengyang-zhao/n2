@@ -99,3 +99,13 @@ __n2_color_table() {
     done
 }
 
+__paginated_jq() {
+    if [ -t 1 ]; then
+        jq -C "$@" | less -FR
+    else
+        jq
+    fi
+}
+
+__n2_has jq less && alias jq=__paginated_jq
+

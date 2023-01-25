@@ -1,4 +1,6 @@
 function __n2_has {
-    type "$1" &>/dev/null
+    for cmd in "$@"; do
+        type "$cmd" &>/dev/null || return 1
+    done
 }
 
