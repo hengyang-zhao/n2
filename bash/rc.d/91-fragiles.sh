@@ -103,7 +103,7 @@ __paginated_jq() {
     if [ -t 1 ]; then
         jq -C "$@" | less -FR
     else
-        jq
+        jq "$@"
     fi
 }
 
