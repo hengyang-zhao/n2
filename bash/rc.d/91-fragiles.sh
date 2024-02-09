@@ -101,9 +101,9 @@ __n2_color_table() {
 
 __paginated_jq() {
     if [ -t 1 ]; then
-        jq -C "$@" | less -FR
+        command jq -C "$@" | less -FR
     else
-        jq "$@"
+        command jq "$@"
     fi
 }
 

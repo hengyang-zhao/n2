@@ -1,0 +1,4 @@
+#!/bin/sh
+
+curl https://api.github.com/rate_limit -H "Authorization: token $1"
+
